@@ -1,4 +1,5 @@
 package com.xxmassdeveloper.mpchartexample.fragments;
+
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,8 +10,8 @@ import android.view.ViewGroup;
 import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.components.XAxis.XAxisPosition;
+import com.github.mikephil.charting.components.YAxis;
 import com.xxmassdeveloper.mpchartexample.R;
 import com.xxmassdeveloper.mpchartexample.custom.MyMarkerView;
 
@@ -33,8 +34,8 @@ public class ScatterChartFrag extends SimpleFragment {
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),"OpenSans-Light.ttf");
         
         MyMarkerView mv = new MyMarkerView(getActivity(), R.layout.custom_marker_view);
-
-        mChart.setMarkerView(mv);
+        mv.setChartView(mChart); // For bounds control
+        mChart.setMarker(mv);
 
         mChart.setDrawGridBackground(false);
         mChart.setData(generateScatterData(6, 10000, 200));

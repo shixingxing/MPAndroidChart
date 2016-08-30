@@ -5,7 +5,7 @@ import android.view.WindowManager;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.realm.implementation.RealmLineData;
+import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.realm.implementation.RealmLineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -33,8 +33,8 @@ public class RealmDatabaseActivityLine extends RealmBaseActivity {
         mChart = (LineChart) findViewById(R.id.chart1);
         setup(mChart);
 
-        mChart.getAxisLeft().setAxisMaxValue(150f);
-        mChart.getAxisLeft().setAxisMinValue(0f);
+        mChart.getAxisLeft().setAxisMaximum(150f);
+        mChart.getAxisLeft().setAxisMinimum(0f);
         mChart.getAxisLeft().setDrawGridLines(false);
         mChart.getXAxis().setDrawGridLines(false);
     }
@@ -52,9 +52,9 @@ public class RealmDatabaseActivityLine extends RealmBaseActivity {
 
     private void setData() {
 
-        RealmResults<RealmDemoData> result = mRealm.allObjects(RealmDemoData.class);
+        RealmResults<RealmDemoData> result = mRealm.where(RealmDemoData.class).findAll();
 
-        RealmLineDataSet<RealmDemoData> set = new RealmLineDataSet<RealmDemoData>(result, "value", "xIndex");
+        RealmLineDataSet<RealmDemoData> set = new RealmLineDataSet<RealmDemoData>(result, "xValue", "yValue");
         set.setDrawCubic(false);
         set.setLabel("Realm LineDataSet");
         set.setDrawCircleHole(false);
@@ -67,7 +67,7 @@ public class RealmDatabaseActivityLine extends RealmBaseActivity {
         dataSets.add(set); // add the dataset
 
         // create a data object with the dataset list
-        RealmLineData data = new RealmLineData(result, "xValue", dataSets);
+        LineData data = new LineData(dataSets);
         styleData(data);
 
         // set data
